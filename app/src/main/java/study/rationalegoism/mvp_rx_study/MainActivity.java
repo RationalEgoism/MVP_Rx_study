@@ -35,6 +35,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void displayRandomUsers(List<Result> resultList) {
-
+        mRandomUserAdapter.setResultList(resultList);
     }
 }
