@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import study.rationalegoism.mvp_rx_study.MainActivity;
 import study.rationalegoism.mvp_rx_study.R;
 import study.rationalegoism.mvp_rx_study.domain.entity.Result;
 
@@ -17,6 +20,11 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
 
 
     private List<Result> resultList;
+    MainActivity mainActivity;
+
+    public RandomUserAdapter(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
 
     @NonNull
     @Override
@@ -31,6 +39,9 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
         Result result = resultList.get(position);
         holder.textViewCard.setText(result.getName().getFirst());
         //TODO add pictureLoaderLib such as Picasso or Glide
+        Glide.with(mainActivity)
+                .load(result.getPicture().getMedium())
+                .into(holder.imageViewCard);
 
     }
 
