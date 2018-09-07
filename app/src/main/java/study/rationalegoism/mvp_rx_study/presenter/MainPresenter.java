@@ -13,7 +13,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void initialize() {
+    public void getRandomUsers() {
 
     }
 }
