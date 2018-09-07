@@ -38,7 +38,6 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
     public void onBindViewHolder(@NonNull RandomUserViewHolder holder, int position) {
         Result result = resultList.get(position);
         holder.textViewCard.setText(result.getName().getFirst());
-        //TODO add pictureLoaderLib such as Picasso or Glide
         Glide.with(mainActivity)
                 .load(result.getPicture().getMedium())
                 .into(holder.imageViewCard);
