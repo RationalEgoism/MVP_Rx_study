@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.List;
+
+import study.rationalegoism.mvp_rx_study.domain.entity.Result;
 import study.rationalegoism.mvp_rx_study.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.presenter.contract.MainContract;
 import study.rationalegoism.mvp_rx_study.view.adapter.RandomUserAdapter;
@@ -28,8 +31,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,
                 false));
-
-
     }
 
+    @Override
+    public void displayRandomUsers(List<Result> resultList) {
+
+    }
 }
