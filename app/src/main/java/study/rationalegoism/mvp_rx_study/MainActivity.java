@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         initView();
         initPresenter();
+        getRandomUsersList();
     }
 
     private void initPresenter() {
