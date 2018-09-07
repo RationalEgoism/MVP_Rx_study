@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MVP_Rx_study</string>
+    <string name="pictureofrandomuser">pictureOfRandomUser</string>
 </resources>
