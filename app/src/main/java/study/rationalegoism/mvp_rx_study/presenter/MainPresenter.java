@@ -6,7 +6,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import study.rationalegoism.mvp_rx_study.domain.entity.RandomUsers;
 import study.rationalegoism.mvp_rx_study.model.MainModel;
-import study.rationalegoism.mvp_rx_study.presenter.contract.MainContract;
+import study.rationalegoism.mvp_rx_study.MainContract;
 import timber.log.Timber;
 
 public class MainPresenter implements MainContract.Presenter {

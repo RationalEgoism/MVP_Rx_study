@@ -11,7 +11,6 @@ import java.util.List;
 import okhttp3.Cache;
 import study.rationalegoism.mvp_rx_study.domain.entity.Result;
 import study.rationalegoism.mvp_rx_study.presenter.MainPresenter;
-import study.rationalegoism.mvp_rx_study.presenter.contract.MainContract;
 import study.rationalegoism.mvp_rx_study.view.adapter.RandomUserAdapter;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {

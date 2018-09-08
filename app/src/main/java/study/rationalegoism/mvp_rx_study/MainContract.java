@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.presenter.contract;
+package study.rationalegoism.mvp_rx_study;
 
 import java.util.List;
 

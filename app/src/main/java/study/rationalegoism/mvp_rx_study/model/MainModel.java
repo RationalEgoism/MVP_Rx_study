@@ -12,14 +12,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import study.rationalegoism.mvp_rx_study.domain.entity.RandomUsers;
 import study.rationalegoism.mvp_rx_study.model.RetrofitRequest.RandomUsersRequest;
-import study.rationalegoism.mvp_rx_study.presenter.contract.MainContract;
+import study.rationalegoism.mvp_rx_study.MainContract;
 import timber.log.Timber;
 
 public class MainModel implements MainContract.Model {
 
-    MainContract.Presenter mPresenter;
-    Cache cacheFile;
-    String randomUsersBaseUrl;
+    private MainContract.Presenter mPresenter;
+    private Cache cacheFile;
+    private String randomUsersBaseUrl;
 
     public MainModel(MainContract.Presenter mPresenter, Cache cacheFile, String randomUsersBaseUrl) {
         this.mPresenter = mPresenter;
