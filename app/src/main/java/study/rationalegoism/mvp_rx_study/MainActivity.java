@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,
                 false));
+        mRecycleView.setAdapter(mRandomUserAdapter);
     }
 
     @Override
