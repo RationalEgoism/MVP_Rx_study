@@ -38,10 +38,11 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
     @Override
     public void onBindViewHolder(@NonNull RandomUserViewHolder holder, int position) {
         Result result = resultList.get(position);
-        holder.textViewCard.setText(result.getName().getFirst());
+        holder.tvCardName.setText(result.getName().getFirst());
+        holder.tvCardPhone.setText(result.getPhone());
         Glide.with(mainActivity)
                 .load(result.getPicture().getMedium())
-                .into(holder.imageViewCard);
+                .into(holder.ivCardPicture);
     }
 
     @Override
@@ -55,13 +56,15 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
     }
 
     public class RandomUserViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageViewCard;
-        public TextView textViewCard;
+        public ImageView ivCardPicture;
+        public TextView tvCardName;
+        public TextView tvCardPhone;
 
         public RandomUserViewHolder(View itemView) {
             super(itemView);
-            imageViewCard = itemView.findViewById(R.id.imageViewCard);
-            textViewCard = itemView.findViewById(R.id.textViewCard);
+            ivCardPicture = itemView.findViewById(R.id.ivCardPicture);
+            tvCardName = itemView.findViewById(R.id.tvCardName);
+            tvCardPhone = itemView.findViewById(R.id.tvCardPhone);
         }
     }
 }

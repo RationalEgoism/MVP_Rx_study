@@ -8,5 +8,5 @@ import study.rationalegoism.mvp_rx_study.domain.entity.RandomUsers;
 public interface RandomUsersRequest {
 
     @GET("api")
-    Call<RandomUsers> getRandomUsers(@Query("results") int size);
+    Call<RandomUsers> getRandomUsers(@Query("results") int size, @Query("nat") String nationality);
 }

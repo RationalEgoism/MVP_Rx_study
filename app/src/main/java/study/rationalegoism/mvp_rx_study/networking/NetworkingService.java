@@ -28,7 +28,7 @@ public class NetworkingService implements NetworkingServiceApi {
     public Call<RandomUsers> getRandomUsers() {
         Retrofit retrofit = getRetrofit();
         RandomUsersRequest request = retrofit.create(RandomUsersRequest.class);
-        return request.getRandomUsers(10);
+        return request.getRandomUsers(10, "gb");
     }
 
     @NonNull
