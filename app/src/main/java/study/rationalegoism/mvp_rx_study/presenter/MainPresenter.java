@@ -30,6 +30,7 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void onResponse(Call<RandomUsers> call, Response<RandomUsers> response) {
                 if(response.isSuccessful()){
+                    mModel.saveRandomUsersToDB(response.body());
                     mView.displayRandomUsers(response.body().getResults());
                 }
             }
