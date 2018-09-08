@@ -19,4 +19,8 @@ public class AppContextSingleton{
     public void init(Context context){
         this.context = context.getApplicationContext();
     }
+
+    public Context getContext(){
+        return context;
+    }
 }
