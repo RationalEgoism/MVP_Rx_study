@@ -22,9 +22,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeAll();
+        getRandomUsersList();
+    }
+
+    private void initializeAll() {
+        AppContextSingleton.getInstance().init(this);
         initView();
         initPresenter();
-        getRandomUsersList();
     }
 
     private void initPresenter() {

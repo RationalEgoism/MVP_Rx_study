@@ -9,7 +9,7 @@ public class AppContextSingleton{
 
     private AppContextSingleton() { }
 
-    private static AppContextSingleton getInstance(){
+    public static AppContextSingleton getInstance(){
         if(instance == null){
             instance = new AppContextSingleton();
         }
