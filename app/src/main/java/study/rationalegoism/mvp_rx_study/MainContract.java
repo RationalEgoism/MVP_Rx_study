@@ -18,5 +18,6 @@ public interface MainContract {
 
     interface Model{
         Call<RandomUsers> getRandomUsersCall();
+        void saveRandomUsersToDB(RandomUsers randomUsers);
     }
 }

@@ -2,6 +2,7 @@ package study.rationalegoism.mvp_rx_study.domain.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RandomUsers {
@@ -18,6 +19,13 @@ public class RandomUsers {
 
     public RandomUsers(List<Result> results) {
         this.results = results;
+    }
+
+    public List<String> getImagesList(){
+        List<String> imagesList = new ArrayList<>();
+        for(Result result: results)
+            imagesList.add(result.getPicture().getMedium());
+        return imagesList;
     }
 
     @Override
