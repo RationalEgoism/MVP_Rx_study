@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import study.rationalegoism.mvp_rx_study.MainActivity;
@@ -19,7 +20,7 @@ import study.rationalegoism.mvp_rx_study.domain.entity.Result;
 public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.RandomUserViewHolder>{
 
 
-    private List<Result> resultList;
+    private List<Result> resultList = new ArrayList<>();
     MainActivity mainActivity;
 
     public RandomUserAdapter(MainActivity mainActivity) {
@@ -41,7 +42,6 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
         Glide.with(mainActivity)
                 .load(result.getPicture().getMedium())
                 .into(holder.imageViewCard);
-
     }
 
     @Override
@@ -51,6 +51,7 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
 
     public void setResultList(List<Result> resultList) {
         this.resultList = resultList;
+        notifyDataSetChanged();
     }
 
     public class RandomUserViewHolder extends RecyclerView.ViewHolder{
