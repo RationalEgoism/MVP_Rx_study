@@ -1,11 +1,8 @@
-package study.rationalegoism.mvp_rx_study.networking;
+package study.rationalegoism.mvp_rx_study.model;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-
-import java.io.File;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -13,19 +10,25 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import study.rationalegoism.mvp_rx_study.R;
 import study.rationalegoism.mvp_rx_study.domain.entity.RandomUsers;
+import study.rationalegoism.mvp_rx_study.model.RetrofitRequest.RandomUsersRequest;
+import study.rationalegoism.mvp_rx_study.presenter.contract.MainContract;
 import timber.log.Timber;
 
-public class NetworkingService implements NetworkingServiceApi {
-    private Context context;
+public class MainModel implements MainContract.Model {
 
-    public NetworkingService(Context context) {
-        this.context = context;
+    MainContract.Presenter mPresenter;
+    Cache cacheFile;
+    String randomUsersBaseUrl;
+
+    public MainModel(MainContract.Presenter mPresenter, Cache cacheFile, String randomUsersBaseUrl) {
+        this.mPresenter = mPresenter;
+        this.cacheFile = cacheFile;
+        this.randomUsersBaseUrl = randomUsersBaseUrl;
     }
 
     @Override
-    public Call<RandomUsers> getRandomUsers() {
+    public Call<RandomUsers> getRandomUsersCall() {
         Retrofit retrofit = getRetrofit();
         RandomUsersRequest request = retrofit.create(RandomUsersRequest.class);
         return request.getRandomUsers(10, "gb");
@@ -39,14 +42,13 @@ public class NetworkingService implements NetworkingServiceApi {
         return new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(gsonConverterFactory)
-                .baseUrl(context.getResources().getString(R.string.randomUserBaseUrl))
+                .baseUrl(randomUsersBaseUrl)
                 .build();
     }
 
     @NonNull
     private OkHttpClient getOkHttpClient() {
-        File cacheFile = new File(context.getCacheDir(), "HttpCache");
-        Cache cache = new Cache(cacheFile, 10 * 1024 * 1024);
+        Cache cache = cacheFile;
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {

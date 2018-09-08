@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.networking;
+package study.rationalegoism.mvp_rx_study.model.RetrofitRequest;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

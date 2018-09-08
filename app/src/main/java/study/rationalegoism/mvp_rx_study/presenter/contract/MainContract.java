@@ -2,6 +2,8 @@ package study.rationalegoism.mvp_rx_study.presenter.contract;
 
 import java.util.List;
 
+import retrofit2.Call;
+import study.rationalegoism.mvp_rx_study.domain.entity.RandomUsers;
 import study.rationalegoism.mvp_rx_study.domain.entity.Result;
 
 public interface MainContract {
@@ -12,5 +14,9 @@ public interface MainContract {
     interface View{
         void displayRandomUsers(List<Result> resultList);
         void getRandomUsersList();
+    }
+
+    interface Model{
+        Call<RandomUsers> getRandomUsersCall();
     }
 }

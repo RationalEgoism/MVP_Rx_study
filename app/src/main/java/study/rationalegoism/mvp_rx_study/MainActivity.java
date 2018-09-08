@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.Cache;
 import study.rationalegoism.mvp_rx_study.domain.entity.Result;
-import study.rationalegoism.mvp_rx_study.networking.NetworkingService;
-import study.rationalegoism.mvp_rx_study.networking.NetworkingServiceApi;
 import study.rationalegoism.mvp_rx_study.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.presenter.contract.MainContract;
 import study.rationalegoism.mvp_rx_study.view.adapter.RandomUserAdapter;
@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initPresenter() {
-        NetworkingServiceApi networkingServiceApi = new NetworkingService(this);
-        mPresenter = new MainPresenter(this, networkingServiceApi);
+        mPresenter = new MainPresenter(this, getCacheFile(), getRandomUsersBaseUrl());
     }
 
     private void initView() {
@@ -50,5 +49,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void getRandomUsersList() {
         mPresenter.getRandomUsers();
+    }
+
+    private Cache getCacheFile(){
+        File cacheFile = new File(this.getCacheDir(), "HttpCache");
+        return new Cache(cacheFile, 10 * 1024 * 1024);
+    }
+
+    private String getRandomUsersBaseUrl(){
+        return this.getResources().getString(R.string.randomUserBaseUrl);
     }
 }
