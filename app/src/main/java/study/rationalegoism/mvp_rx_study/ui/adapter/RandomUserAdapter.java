@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import study.rationalegoism.mvp_rx_study.R;
-import study.rationalegoism.mvp_rx_study.data.model.Result;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
 
 public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.RandomUserViewHolder>{
     public class RandomUserViewHolder extends RecyclerView.ViewHolder{
@@ -24,13 +24,13 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
         @BindView(R.id.tvCardName) TextView tvCardName;
         @BindView(R.id.tvCardPhone) TextView tvCardPhone;
 
-        public RandomUserViewHolder(View itemView) {
+        RandomUserViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    private List<Result> resultList = new ArrayList<>();
+    private List<Person> personList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -42,21 +42,21 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
 
     @Override
     public void onBindViewHolder(@NonNull RandomUserViewHolder holder, int position) {
-        Result result = resultList.get(position);
-        holder.tvCardName.setText(result.getName().getFirst());
-        holder.tvCardPhone.setText(result.getPhone());
+        Person person = personList.get(position);
+        holder.tvCardName.setText(person.getName().getFirst());
+        holder.tvCardPhone.setText(person.getPhone());
         Glide.with(holder.ivCardPicture)
-                .load(result.getPicture().getMedium())
+                .load(person.getPicture().getMedium())
                 .into(holder.ivCardPicture);
     }
 
     @Override
     public int getItemCount() {
-        return resultList.size();
+        return personList.size();
     }
 
-    public void setResultList(List<Result> resultList) {
-        this.resultList = resultList;
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
         notifyDataSetChanged();
     }
 }

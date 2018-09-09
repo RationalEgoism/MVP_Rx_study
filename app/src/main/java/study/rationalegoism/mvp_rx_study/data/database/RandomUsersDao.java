@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import study.rationalegoism.mvp_rx_study.data.classes.Person;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
 
 @Dao
 public interface RandomUsersDao {

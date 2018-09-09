@@ -2,6 +2,8 @@ package study.rationalegoism.mvp_rx_study.ui.presenter;
 
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -10,12 +12,14 @@ import retrofit2.Response;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
-import study.rationalegoism.mvp_rx_study.data.classes.Person;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
-import study.rationalegoism.mvp_rx_study.data.model.Result;
-import study.rationalegoism.mvp_rx_study.ui.presenter.loadRandomUsersAsync.LoadRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.ui.presenter.loadRandomUsersAsync.OnDownloadListener;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.ClearRandomUsersAsync;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.OnDeleteListener;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insertRandomUsersAsync.InsertRandomUsersAsync;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.loadRandomUsersAsync.LoadRandomUsersAsync;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.loadRandomUsersAsync.OnDownloadListener;
 
 public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;
@@ -43,7 +47,7 @@ public class MainPresenter implements MainContract.Presenter {
         getRandomUsersList(new Callback<RandomUsers>() {
             @Override
             public void onResponse(Call<RandomUsers> call, Response<RandomUsers> response) {
-                insertDataToStore(response.body().getResults());
+                insertDataToStore(response.body().getPersons());
                 loadRandomUsers();
             }
 
@@ -62,26 +66,24 @@ public class MainPresenter implements MainContract.Presenter {
     private void loadRandomUsers(){
         LoadRandomUsersAsync task = new LoadRandomUsersAsync(new OnDownloadListener() {
             @Override
-            public void onSuccess(List<Result> results) {
-                mView.displayRandomUsers(results);
+            public void onSuccess(List<Person> personList) {
+                mView.displayRandomUsers(personList);
             }
         });
         task.execute(randomUsersDao);
     }
 
-    private void insertDataToStore(List<Result> results){
-        //TODO FIX IT
-        int id = 0;
-        for(Result result: results){
-            Person person = new Person(id++, result.getPicture().getMedium(), result.getName().getFirst(), result.getPhone());
-            new AsyncTask<Person, Void, Void>() {
-                @Override
-                protected Void doInBackground(Person... people) {
-                    randomUsersDao.insert(people[0]);
-                    return null;
+    private void insertDataToStore(List<Person> personList){
+        final List<Person> personListCopy = new ArrayList<>(personList);
+        ClearRandomUsersAsync clearRandomUsersAsync = new ClearRandomUsersAsync(new OnDeleteListener() {
+            @Override
+            public void onSuccess() {
                 }
-            }.execute(person);
-
+        });
+        clearRandomUsersAsync.execute(randomUsersDao);
+        for (Person person : personListCopy) {
+            InsertRandomUsersAsync task = new InsertRandomUsersAsync(person);
+            task.execute(randomUsersDao);
         }
     }
 }

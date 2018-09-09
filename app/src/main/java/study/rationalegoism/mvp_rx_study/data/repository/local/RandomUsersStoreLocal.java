@@ -2,8 +2,8 @@ package study.rationalegoism.mvp_rx_study.data.repository.local;
 
 import java.util.List;
 
-import study.rationalegoism.mvp_rx_study.data.classes.Person;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersStore;
 
 public class RandomUsersStoreLocal implements RandomUsersStore {

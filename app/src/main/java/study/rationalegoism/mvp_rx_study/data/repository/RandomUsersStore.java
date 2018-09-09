@@ -2,7 +2,7 @@ package study.rationalegoism.mvp_rx_study.data.repository;
 
 import java.util.List;
 
-import study.rationalegoism.mvp_rx_study.data.classes.Person;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
 
 public interface RandomUsersStore {
     List<Person> loadPersons();

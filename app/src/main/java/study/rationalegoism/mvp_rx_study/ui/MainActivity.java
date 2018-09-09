@@ -14,7 +14,7 @@ import study.rationalegoism.mvp_rx_study.AppContextSingleton;
 import study.rationalegoism.mvp_rx_study.R;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDb;
-import study.rationalegoism.mvp_rx_study.data.model.Result;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.ui.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
 
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void displayRandomUsers(List<Result> resultList) {
-        mRandomUserAdapter.setResultList(resultList);
+    public void displayRandomUsers(List<Person> personList) {
+        mRandomUserAdapter.setPersonList(personList);
     }
 
     @Override

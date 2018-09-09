@@ -2,31 +2,33 @@ package study.rationalegoism.mvp_rx_study.data.model;
 
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
-public class Result {
+public class Person {
 
     @SerializedName("name")
     //signal that nested fields can be referenced directly in the SQL queries.
     @Embedded(prefix = "name_")
+    @Expose
     private Name name;
 
     @SerializedName("picture")
     @Embedded(prefix = "picture_")
+    @Expose
     private Picture picture;
 
+    @PrimaryKey
+    @NonNull
     @SerializedName("phone")
+    @Expose
     private String phone;
-
-    public Result(Name name, Picture picture, String phone) {
-        this.name = name;
-        this.picture = picture;
-        this.phone = phone;
-    }
 
     @Override
     public String toString() {
@@ -37,11 +39,9 @@ public class Result {
                 .toString();
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
+    public Person(Name name, Picture picture, @NonNull String phone) {
+        this.name = name;
+        this.picture = picture;
         this.phone = phone;
     }
 
@@ -59,5 +59,14 @@ public class Result {
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    @NonNull
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(@NonNull String phone) {
+        this.phone = phone;
     }
 }
