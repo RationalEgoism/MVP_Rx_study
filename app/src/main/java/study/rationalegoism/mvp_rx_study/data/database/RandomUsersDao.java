@@ -1,5 +1,6 @@
 package study.rationalegoism.mvp_rx_study.data.database;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import study.rationalegoism.mvp_rx_study.data.classes.Person;
 
+@Dao
 public interface RandomUsersDao {
 
     @Query("SELECT * FROM person")

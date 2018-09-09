@@ -1,5 +1,7 @@
 package study.rationalegoism.mvp_rx_study.presenter;
 
+import android.os.AsyncTask;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mView;
     private MainContract.Model mModel;
-    private RandomUsersDao randomUsersDao;
+    private final RandomUsersDao randomUsersDao;
 
     public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
         this.mView = mView;
@@ -34,7 +36,7 @@ public class MainPresenter implements MainContract.Presenter {
         mModel.getRandomUsersList(new Callback<RandomUsers>() {
             @Override
             public void onResponse(Call<RandomUsers> call, Response<RandomUsers> response) {
-                mModel.saveRandomUsersToDB(response.body());
+                insertDataToStore(response.body().getResults());
                 mView.displayRandomUsers(response.body().getResults());
             }
 
@@ -46,12 +48,18 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void insertDataToStore(List<Result> results){
-        List<Person> list = new ArrayList<>();
         //TODO FIX IT
         int id = 0;
         for(Result result: results){
             Person person = new Person(id++, result.getName().getFirst(), result.getPhone());
-            randomUsersDao.insert(person);
+            new AsyncTask<Person, Void, Void>() {
+                @Override
+                protected Void doInBackground(Person... people) {
+                    randomUsersDao.insert(people[0]);
+                    return null;
+                }
+            }.execute(person);
+
         }
     }
 }
