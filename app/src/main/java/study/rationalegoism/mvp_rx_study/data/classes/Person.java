@@ -3,6 +3,7 @@ package study.rationalegoism.mvp_rx_study.data.classes;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+//Table
 @Entity
 public class Person {
     @PrimaryKey
