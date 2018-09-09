@@ -1,9 +1,6 @@
 package study.rationalegoism.mvp_rx_study.ui.presenter;
 
-import android.os.AsyncTask;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -17,9 +14,9 @@ import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.ClearRandomUsersAsync;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.OnDeleteListener;
-import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insertRandomUsersAsync.InsertRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.loadRandomUsersAsync.LoadRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.loadRandomUsersAsync.OnDownloadListener;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insert.InsertRandomUsersAsync;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.load.LoadRandomUsersAsync;
+import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.load.OnDownloadListener;
 
 public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;
@@ -34,8 +31,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void getRandomUsers(boolean isOnline) {
-        if(isOnline) {
+    public void getRandomUsers(boolean refresh) {
+        if(refresh) {
             getRandomUsersOnline();
         }
         else {
@@ -85,5 +82,15 @@ public class MainPresenter implements MainContract.Presenter {
             InsertRandomUsersAsync task = new InsertRandomUsersAsync(person);
             task.execute(randomUsersDao);
         }
+    }
+
+    @Override
+    public void onAttach() {
+        getRandomUsers(false);
+    }
+
+    @Override
+    public void onDetach() {
+        //TODO
     }
 }

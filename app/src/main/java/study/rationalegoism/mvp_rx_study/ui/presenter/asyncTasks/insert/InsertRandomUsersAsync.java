@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insertRandomUsersAsync;
+package study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insert;
 
 import android.os.AsyncTask;
 

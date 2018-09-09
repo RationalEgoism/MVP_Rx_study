@@ -29,7 +29,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initializeAll();
-        getRandomUsersListFromActivity();
+//        getRandomUsersListFromActivity();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onAttach();
     }
 
     private void initializeAll() {
