@@ -9,12 +9,15 @@ public class Person {
     @PrimaryKey
     private long id;
 
+    private String image;
+
     private String name;
 
     private String phone;
 
-    public Person(long id, String name, String phone) {
+    public Person(long id, String image, String name, String phone) {
         this.id = id;
+        this.image = image;
         this.name = name;
         this.phone = phone;
     }
@@ -25,6 +28,14 @@ public class Person {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {

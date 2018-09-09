@@ -14,6 +14,10 @@ public class Picture {
     @Expose
     private String thumbnail;
 
+    public Picture(String medium) {
+        this.medium = medium;
+    }
+
     @Override
     public String toString() {
         return new org.apache.commons.lang3.builder.ToStringBuilder(this)

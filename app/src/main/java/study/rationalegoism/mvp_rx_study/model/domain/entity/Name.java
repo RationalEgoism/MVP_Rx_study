@@ -15,6 +15,10 @@ public class Name {
     @Expose
     private String second;
 
+    public Name(String first) {
+        this.first = first;
+    }
+
     public String getFirst() {
         return first;
     }

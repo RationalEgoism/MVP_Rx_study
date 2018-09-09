@@ -19,6 +19,12 @@ public class Result {
     @Expose
     private String phone;
 
+    public Result(Name name, Picture picture, String phone) {
+        this.name = name;
+        this.picture = picture;
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
