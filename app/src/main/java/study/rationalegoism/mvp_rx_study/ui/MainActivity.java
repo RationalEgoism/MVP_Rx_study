@@ -2,6 +2,7 @@ package study.rationalegoism.mvp_rx_study.ui;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     @BindView(R.id.rvRandomUsers) RecyclerView mRecycleView;
+    @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
     private MainContract.Presenter mPresenter;
     private RandomUserAdapter mRandomUserAdapter;
 
@@ -60,6 +62,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 false));
         mRandomUserAdapter = new RandomUserAdapter();
         mRecycleView.setAdapter(mRandomUserAdapter);
+
+        refreshLayout.setOnRefreshListener(() -> {
+            //if we have internet connection -> refresh, else -> display old data
+            mPresenter.getRandomUsers(
+                    AppContextSingleton.getInstance().
+                    internetConnectionAvailable());
+        });
     }
 
     @Override
@@ -67,11 +76,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mRandomUserAdapter.setPersonList(personList);
     }
 
-    @Override
-    public void getRandomUsersListFromActivity() {
-        mPresenter.getRandomUsers(AppContextSingleton.getInstance().
-                internetConnectionAvailable(200));
+    @Override public void stopLoadingIndicator() {
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
     }
-
-
 }

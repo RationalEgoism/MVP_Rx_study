@@ -11,6 +11,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import timber.log.Timber;
+
 public class AppContextSingleton{
     private static AppContextSingleton instance = null;
     private Context context;
@@ -33,22 +35,21 @@ public class AppContextSingleton{
         return context;
     }
 
-    public boolean internetConnectionAvailable(int timeOut) {
+    public boolean internetConnectionAvailable() {
+        int timeOut = 200;
         InetAddress inetAddress = null;
         try {
-            Future<InetAddress> future = Executors.newSingleThreadExecutor().submit(new Callable<InetAddress>() {
-                @Override
-                public InetAddress call() {
-                    try {
-                        return InetAddress.getByName("google.com");
-                    } catch (UnknownHostException e) {
-                        return null;
-                    }
+            Future<InetAddress> future = Executors.newSingleThreadExecutor().submit(() -> {
+                try {
+                    return InetAddress.getByName("google.com");
+                } catch (UnknownHostException e) {
+                    return null;
                 }
             });
             inetAddress = future.get(timeOut, TimeUnit.MILLISECONDS);
             future.cancel(true);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            Timber.i(e.getMessage());
         }
         return inetAddress!=null && !inetAddress.equals("");
     }

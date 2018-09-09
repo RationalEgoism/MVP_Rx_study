@@ -8,11 +8,11 @@ import study.rationalegoism.mvp_rx_study.ui.base.BasePresenter;
 public interface MainContract {
     interface View{
         void displayRandomUsers(List<Person> personList);
-        void getRandomUsersListFromActivity();
+        void stopLoadingIndicator();
     }
 
     interface Presenter extends BasePresenter{
-        void getRandomUsers(boolean isOnline);
+        void getRandomUsers(boolean refreshRequired);
     }
 
 }

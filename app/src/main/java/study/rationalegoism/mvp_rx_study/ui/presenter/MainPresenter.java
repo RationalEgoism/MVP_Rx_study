@@ -31,8 +31,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void getRandomUsers(boolean refresh) {
-        if(refresh) {
+    public void getRandomUsers(boolean refreshRequired) {
+        if(refreshRequired) {
             getRandomUsersOnline();
         }
         else {
@@ -46,11 +46,12 @@ public class MainPresenter implements MainContract.Presenter {
             public void onResponse(Call<RandomUsers> call, Response<RandomUsers> response) {
                 insertDataToStore(response.body().getPersons());
                 loadRandomUsers();
+                mView.stopLoadingIndicator();
             }
 
             @Override
             public void onFailure(Call<RandomUsers> call, Throwable t) {
-
+                //TODO
             }
         });
     }
@@ -61,22 +62,13 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void loadRandomUsers(){
-        LoadRandomUsersAsync task = new LoadRandomUsersAsync(new OnDownloadListener() {
-            @Override
-            public void onSuccess(List<Person> personList) {
-                mView.displayRandomUsers(personList);
-            }
-        });
+        LoadRandomUsersAsync task = new LoadRandomUsersAsync(mView::displayRandomUsers);
         task.execute(randomUsersDao);
     }
 
     private void insertDataToStore(List<Person> personList){
         final List<Person> personListCopy = new ArrayList<>(personList);
-        ClearRandomUsersAsync clearRandomUsersAsync = new ClearRandomUsersAsync(new OnDeleteListener() {
-            @Override
-            public void onSuccess() {
-                }
-        });
+        ClearRandomUsersAsync clearRandomUsersAsync = new ClearRandomUsersAsync(() -> {});
         clearRandomUsersAsync.execute(randomUsersDao);
         for (Person person : personListCopy) {
             InsertRandomUsersAsync task = new InsertRandomUsersAsync(person);
