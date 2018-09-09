@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.presenter;
+package study.rationalegoism.mvp_rx_study.ui.presenter;
 
 import android.os.AsyncTask;
 
@@ -7,34 +7,30 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
+import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
 import study.rationalegoism.mvp_rx_study.data.classes.Person;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
-import study.rationalegoism.mvp_rx_study.model.MainModel;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.RandomUsers;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
-import study.rationalegoism.mvp_rx_study.presenter.loadRandomUsersAsync.LoadRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.presenter.loadRandomUsersAsync.OnDownloadListener;
+import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
+import study.rationalegoism.mvp_rx_study.data.model.Result;
+import study.rationalegoism.mvp_rx_study.ui.presenter.loadRandomUsersAsync.LoadRandomUsersAsync;
+import study.rationalegoism.mvp_rx_study.ui.presenter.loadRandomUsersAsync.OnDownloadListener;
 
 public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;
-    private MainContract.Model mModel;
     private final RandomUsersDao randomUsersDao;
+    private final RandomUsersService mRandomUsersService;
+
 
     public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
         this.mView = mView;
         this.randomUsersDao = randomUsersDao;
-        initModel();
+        mRandomUsersService = RandomUsersServiceFactory.makeRandomUsersService();
     }
-
-    private void initModel() {
-        mModel = new MainModel(this);
-    }
-
 
     @Override
     public void getRandomUsers(boolean isOnline) {
-
         if(isOnline) {
             getRandomUsersOnline();
         }
@@ -44,7 +40,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void getRandomUsersOnline() {
-        mModel.getRandomUsersList(new Callback<RandomUsers>() {
+        getRandomUsersList(new Callback<RandomUsers>() {
             @Override
             public void onResponse(Call<RandomUsers> call, Response<RandomUsers> response) {
                 insertDataToStore(response.body().getResults());
@@ -56,6 +52,11 @@ public class MainPresenter implements MainContract.Presenter {
 
             }
         });
+    }
+
+    private void getRandomUsersList(Callback<RandomUsers> randomUsersCallback) {
+        mRandomUsersService.getRandomUsers(10, "gb")
+                .enqueue(randomUsersCallback);
     }
 
     private void loadRandomUsers(){

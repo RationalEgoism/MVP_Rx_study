@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.model.network;
+package study.rationalegoism.mvp_rx_study.data.network;
 
 import java.io.File;
 

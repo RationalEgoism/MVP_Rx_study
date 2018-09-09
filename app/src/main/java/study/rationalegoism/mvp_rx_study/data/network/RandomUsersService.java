@@ -1,9 +1,9 @@
-package study.rationalegoism.mvp_rx_study.model.network;
+package study.rationalegoism.mvp_rx_study.data.network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.RandomUsers;
+import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
 
 public interface RandomUsersService {
 

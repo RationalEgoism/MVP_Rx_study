@@ -1,22 +1,25 @@
-package study.rationalegoism.mvp_rx_study.model.domain.entity;
+package study.rationalegoism.mvp_rx_study.data.model;
 
-import com.google.gson.annotations.Expose;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@Entity
 public class Result {
 
     @SerializedName("name")
-    @Expose
+    //signal that nested fields can be referenced directly in the SQL queries.
+    @Embedded(prefix = "name_")
     private Name name;
 
     @SerializedName("picture")
-    @Expose
+    @Embedded(prefix = "picture_")
     private Picture picture;
 
     @SerializedName("phone")
-    @Expose
     private String phone;
 
     public Result(Name name, Picture picture, String phone) {

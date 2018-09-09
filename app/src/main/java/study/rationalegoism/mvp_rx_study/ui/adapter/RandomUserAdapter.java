@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import study.rationalegoism.mvp_rx_study.R;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
+import study.rationalegoism.mvp_rx_study.data.model.Result;
 
 public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.RandomUserViewHolder>{
     public class RandomUserViewHolder extends RecyclerView.ViewHolder{

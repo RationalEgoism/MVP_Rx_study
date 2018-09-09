@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.presenter.loadRandomUsersAsync;
+package study.rationalegoism.mvp_rx_study.ui.presenter.loadRandomUsersAsync;
 
 import android.os.AsyncTask;
 
@@ -7,9 +7,9 @@ import java.util.List;
 
 import study.rationalegoism.mvp_rx_study.data.classes.Person;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Name;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Picture;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
+import study.rationalegoism.mvp_rx_study.data.model.Name;
+import study.rationalegoism.mvp_rx_study.data.model.Picture;
+import study.rationalegoism.mvp_rx_study.data.model.Result;
 
 public class LoadRandomUsersAsync extends AsyncTask<RandomUsersDao, Void, List<Result>>{
 
