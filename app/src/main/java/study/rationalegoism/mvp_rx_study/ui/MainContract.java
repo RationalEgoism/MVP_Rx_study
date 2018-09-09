@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study;
+package study.rationalegoism.mvp_rx_study.ui;
 
 import java.util.List;
 
@@ -18,6 +18,5 @@ public interface MainContract {
 
     interface Model{
         void getRandomUsersList(Callback<RandomUsers> randomUsersCallback);
-        void saveRandomUsersToDB(RandomUsers randomUsers);
     }
 }

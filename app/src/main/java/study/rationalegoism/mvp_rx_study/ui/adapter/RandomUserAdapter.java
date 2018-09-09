@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.view.adapter;
+package study.rationalegoism.mvp_rx_study.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,19 +13,24 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import study.rationalegoism.mvp_rx_study.MainActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import study.rationalegoism.mvp_rx_study.R;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 
 public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.RandomUserViewHolder>{
+    public class RandomUserViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.ivCardPicture) ImageView ivCardPicture;
+        @BindView(R.id.tvCardName) TextView tvCardName;
+        @BindView(R.id.tvCardPhone) TextView tvCardPhone;
 
+        public RandomUserViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
 
     private List<Result> resultList = new ArrayList<>();
-    private MainActivity mainActivity;
-
-    public RandomUserAdapter(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
-    }
 
     @NonNull
     @Override
@@ -40,7 +45,7 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
         Result result = resultList.get(position);
         holder.tvCardName.setText(result.getName().getFirst());
         holder.tvCardPhone.setText(result.getPhone());
-        Glide.with(mainActivity)
+        Glide.with(holder.ivCardPicture)
                 .load(result.getPicture().getMedium())
                 .into(holder.ivCardPicture);
     }
@@ -53,18 +58,5 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
     public void setResultList(List<Result> resultList) {
         this.resultList = resultList;
         notifyDataSetChanged();
-    }
-
-    public class RandomUserViewHolder extends RecyclerView.ViewHolder{
-        public ImageView ivCardPicture;
-        public TextView tvCardName;
-        public TextView tvCardPhone;
-
-        public RandomUserViewHolder(View itemView) {
-            super(itemView);
-            ivCardPicture = itemView.findViewById(R.id.ivCardPicture);
-            tvCardName = itemView.findViewById(R.id.tvCardName);
-            tvCardPhone = itemView.findViewById(R.id.tvCardPhone);
-        }
     }
 }

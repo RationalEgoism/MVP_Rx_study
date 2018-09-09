@@ -7,7 +7,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import study.rationalegoism.mvp_rx_study.MainContract;
+import study.rationalegoism.mvp_rx_study.ui.MainContract;
 import study.rationalegoism.mvp_rx_study.data.classes.Person;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.model.MainModel;

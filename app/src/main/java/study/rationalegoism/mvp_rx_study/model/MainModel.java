@@ -1,14 +1,7 @@
 package study.rationalegoism.mvp_rx_study.model;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.FutureTarget;
-
-import java.io.File;
-import java.util.List;
-
 import retrofit2.Callback;
-import study.rationalegoism.mvp_rx_study.AppContextSingleton;
-import study.rationalegoism.mvp_rx_study.MainContract;
+import study.rationalegoism.mvp_rx_study.ui.MainContract;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.RandomUsers;
 import study.rationalegoism.mvp_rx_study.model.network.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.model.network.RandomUsersServiceFactory;
@@ -28,10 +21,4 @@ public class MainModel implements MainContract.Model {
         mRandomUsersService.getRandomUsers(10, "gb")
                 .enqueue(randomUsersCallback);
     }
-
-    @Override
-    public void saveRandomUsersToDB(RandomUsers randomUsers) {
-
-    }
-
 }
