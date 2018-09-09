@@ -1,5 +1,6 @@
 package study.rationalegoism.mvp_rx_study;
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
+import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
+import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDb;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 import study.rationalegoism.mvp_rx_study.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.view.adapter.RandomUserAdapter;
@@ -32,7 +35,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initPresenter() {
-        mPresenter = new MainPresenter(this);
+        RandomUsersDb randomUsersDb = Room.databaseBuilder(AppContextSingleton.getInstance().getContext(),
+                RandomUsersDb.class, "random-users-database").build();
+        RandomUsersDao randomUsersDao = randomUsersDb.randomUsersDao();
+
+
+        mPresenter = new MainPresenter(this, randomUsersDao);
     }
 
     private void initView() {

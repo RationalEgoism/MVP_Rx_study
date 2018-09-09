@@ -4,15 +4,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import study.rationalegoism.mvp_rx_study.MainContract;
+import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.model.MainModel;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.RandomUsers;
 
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mView;
     private MainContract.Model mModel;
+    private RandomUsersDao randomUsersDao;
 
-    public MainPresenter(MainContract.View mView) {
+    public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
         this.mView = mView;
+        this.randomUsersDao = randomUsersDao;
         initModel();
     }
 
