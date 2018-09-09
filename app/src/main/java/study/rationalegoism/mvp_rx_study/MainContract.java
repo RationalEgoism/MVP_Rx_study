@@ -2,7 +2,6 @@ package study.rationalegoism.mvp_rx_study;
 
 import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.Callback;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.RandomUsers;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;

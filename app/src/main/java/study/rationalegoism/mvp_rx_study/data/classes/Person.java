@@ -13,6 +13,12 @@ public class Person {
 
     private String phone;
 
+    public Person(long id, String name, String phone) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+    }
+
     public long getId() {
         return id;
     }
