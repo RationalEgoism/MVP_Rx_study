@@ -15,4 +15,7 @@ public interface RandomUsersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Person person);
+
+    @Query("DELETE FROM person")
+    void deleteAll();
 }
