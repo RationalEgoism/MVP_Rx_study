@@ -8,7 +8,7 @@ import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 
 public interface MainContract {
     interface Presenter{
-        void getRandomUsers();
+        void getRandomUsers(boolean isOnline);
     }
 
     interface View{

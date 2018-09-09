@@ -2,7 +2,6 @@ package study.rationalegoism.mvp_rx_study.presenter;
 
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,8 +11,6 @@ import study.rationalegoism.mvp_rx_study.MainContract;
 import study.rationalegoism.mvp_rx_study.data.classes.Person;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.model.MainModel;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Name;
-import study.rationalegoism.mvp_rx_study.model.domain.entity.Picture;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.RandomUsers;
 import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 import study.rationalegoism.mvp_rx_study.presenter.loadRandomUsersAsync.LoadRandomUsersAsync;
@@ -36,7 +33,17 @@ public class MainPresenter implements MainContract.Presenter {
 
 
     @Override
-    public void getRandomUsers() {
+    public void getRandomUsers(boolean isOnline) {
+
+        if(isOnline) {
+            getRandomUsersOnline();
+        }
+        else {
+            loadRandomUsers();
+        }
+    }
+
+    private void getRandomUsersOnline() {
         mModel.getRandomUsersList(new Callback<RandomUsers>() {
             @Override
             public void onResponse(Call<RandomUsers> call, Response<RandomUsers> response) {
@@ -59,27 +66,6 @@ public class MainPresenter implements MainContract.Presenter {
             }
         });
         task.execute(randomUsersDao);
-
-//        new AsyncTask<Void, Void, Void>() {
-//            List<Result> results = new ArrayList<>();
-//            List<Person> personList = new ArrayList<>();
-//
-//            @Override
-//            protected Void doInBackground(Void... voids) {
-//                personList = randomUsersDao.getAllRandomUsers();
-//                for(Person person: personList){
-//                    Result result = new Result(new Name(person.getName()), new Picture(person.getImage()), person.getPhone());
-//                    results.add(result);
-//                }
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Void aVoid) {
-//                super.onPostExecute(aVoid);
-//                users.addAll(results);
-//            }
-//        }.execute();
     }
 
     private void insertDataToStore(List<Result> results){

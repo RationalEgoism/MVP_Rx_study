@@ -1,12 +1,26 @@
 package study.rationalegoism.mvp_rx_study;
 
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDb;
@@ -59,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void getRandomUsersListFromActivity() {
-        mPresenter.getRandomUsers();
+        mPresenter.getRandomUsers(AppContextSingleton.getInstance().
+                internetConnectionAvailable(500));
     }
+
+
 }
