@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.domain.entity;
+package study.rationalegoism.mvp_rx_study.model.domain.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

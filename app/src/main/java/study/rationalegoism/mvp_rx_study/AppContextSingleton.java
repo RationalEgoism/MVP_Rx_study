@@ -16,7 +16,8 @@ public class AppContextSingleton{
         return instance;
     }
 
-    public void init(Context context){
+    //package-level just for MainActivity
+    void init(Context context){
         this.context = context.getApplicationContext();
     }
 

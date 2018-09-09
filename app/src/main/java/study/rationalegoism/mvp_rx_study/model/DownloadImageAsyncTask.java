@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study;
+package study.rationalegoism.mvp_rx_study.model;
 
 import android.os.AsyncTask;
 
@@ -10,13 +10,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import study.rationalegoism.mvp_rx_study.AppContextSingleton;
+import timber.log.Timber;
+
 public class DownloadImageAsyncTask extends AsyncTask<FutureTarget<File>, Void, Void>{
 
 
     private String sameImage(File imageFile) {
         String savedImagePath = null;
 
-        String imageFileName = "JPEG_" + imageFile.getName() + ".jpg";
+        String imageFileName = imageFile.getName() + ".jpg";
         File storageDir = new File(AppContextSingleton.getInstance().getContext()
                 .getApplicationInfo().dataDir, "images");
         File destFile = new File(storageDir, imageFileName);
@@ -41,10 +44,8 @@ public class DownloadImageAsyncTask extends AsyncTask<FutureTarget<File>, Void, 
         try {
             File imageFile = futureTargets[0].get();
             sameImage(imageFile);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException e) {
+            Timber.i(e.getMessage());
         }
         return null;
     }

@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study.domain.entity;
+package study.rationalegoism.mvp_rx_study.model.domain.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

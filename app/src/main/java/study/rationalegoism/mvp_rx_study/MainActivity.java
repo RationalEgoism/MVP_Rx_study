@@ -5,14 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import java.io.File;
 import java.util.List;
 
-import okhttp3.Cache;
-import study.rationalegoism.mvp_rx_study.domain.entity.Result;
+import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 import study.rationalegoism.mvp_rx_study.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.view.adapter.RandomUserAdapter;
 
+//This file should be in the same package as the AppContextSingleton
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     private MainContract.Presenter mPresenter;
     private RecyclerView mRecycleView;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeAll();
-        getRandomUsersList();
+        getRandomUsersListFromActivity();
     }
 
     private void initializeAll() {
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initPresenter() {
-        mPresenter = new MainPresenter(this, getCacheFile(), getRandomUsersBaseUrl());
+        mPresenter = new MainPresenter(this);
     }
 
     private void initView() {
@@ -51,16 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void getRandomUsersList() {
+    public void getRandomUsersListFromActivity() {
         mPresenter.getRandomUsers();
-    }
-
-    private Cache getCacheFile(){
-        File cacheFile = new File(this.getCacheDir(), "HttpCache");
-        return new Cache(cacheFile, 10 * 1024 * 1024);
-    }
-
-    private String getRandomUsersBaseUrl(){
-        return this.getResources().getString(R.string.randomUserBaseUrl);
     }
 }

@@ -15,13 +15,13 @@ import java.util.List;
 
 import study.rationalegoism.mvp_rx_study.MainActivity;
 import study.rationalegoism.mvp_rx_study.R;
-import study.rationalegoism.mvp_rx_study.domain.entity.Result;
+import study.rationalegoism.mvp_rx_study.model.domain.entity.Result;
 
 public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.RandomUserViewHolder>{
 
 
     private List<Result> resultList = new ArrayList<>();
-    MainActivity mainActivity;
+    private MainActivity mainActivity;
 
     public RandomUserAdapter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
