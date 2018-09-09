@@ -31,16 +31,7 @@ public class MainModel implements MainContract.Model {
 
     @Override
     public void saveRandomUsersToDB(RandomUsers randomUsers) {
-        saveRandomUsersImagesToStorage(randomUsers.getImagesList());
+
     }
 
-    private void saveRandomUsersImagesToStorage(List<String> imagesList) {
-        for(String imageUrl: imagesList){
-                    FutureTarget<File> futureTarget =
-                            Glide.with(AppContextSingleton.getInstance().getContext())
-                            .load(imageUrl)
-                            .downloadOnly(100, 100);
-                new DownloadImageAsyncTask().execute(futureTarget);
-        }
-    }
 }
