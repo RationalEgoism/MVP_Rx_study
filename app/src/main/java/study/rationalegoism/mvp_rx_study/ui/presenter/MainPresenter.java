@@ -3,6 +3,12 @@ package study.rationalegoism.mvp_rx_study.ui.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.schedulers.IoScheduler;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +23,6 @@ import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersStore
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.ClearRandomUsersAsync;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insert.InsertRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.load.LoadRandomUsersAsync;
 
 public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;
@@ -25,6 +30,8 @@ public class MainPresenter implements MainContract.Presenter {
     private final RandomUsersService mRandomUsersService;
     private final RandomUsersRepository repository;
 
+    //collect our active subscribes
+    private CompositeDisposable disposeBag;
 
     public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
         this.mView = mView;
@@ -33,6 +40,8 @@ public class MainPresenter implements MainContract.Presenter {
         repository = new RandomUsersRepository(
                 new RandomUsersStoreLocal(randomUsersDao),
                 new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
+
+        disposeBag = new CompositeDisposable();
     }
 
     @Override
@@ -66,14 +75,13 @@ public class MainPresenter implements MainContract.Presenter {
                 .enqueue(randomUsersCallback);
     }
 
-    private void loadRandomUsers(){
-        LoadRandomUsersAsync task = new LoadRandomUsersAsync(personList -> {
-            if(personList.size() == 0)
-                getRandomUsers(true);
-            else
-                mView.displayRandomUsers(personList);
-        });
-        task.execute(randomUsersDao);
+    private void loadRandomUsers(boolean refreshRequired){
+        Disposable disposable = repository.loadPersons(refreshRequired)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mView::displayRandomUsers);
+
+        disposeBag.add(disposable);
     }
 
     private void insertDataToStore(List<Person> personList){
