@@ -15,7 +15,7 @@ public class RandomUsersStoreLocal implements RandomUsersStore {
     }
 
     @Override
-    public Flowable<List<Person>> loadPersons() {
+    public Flowable<List<Person>> loadPersons(boolean refreshRequired) {
         return randomUsersDao.getAllRandomUsers();
     }
 
