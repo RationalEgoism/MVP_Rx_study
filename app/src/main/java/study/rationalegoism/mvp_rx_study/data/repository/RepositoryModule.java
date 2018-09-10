@@ -17,7 +17,7 @@ import study.rationalegoism.mvp_rx_study.data.repository.remote.Remote;
 public class RepositoryModule {
     @Provides
     @Singleton
-    public RandomUsersRepository provideRandomUsersRepository(@Local RandomUsersSource local,
+    public RandomUsersRepository provideRepository(@Local RandomUsersSource local,
                                                              @Remote RandomUsersSource remote){
         return new RandomUsersRepository(local, remote);
     }
@@ -25,14 +25,14 @@ public class RepositoryModule {
     @Provides
     @Singleton
     @Local
-    public RandomUsersSource provideRandomUsersSourceLocal(RandomUsersDao randomUsersDao){
+    public RandomUsersSource provideSourceLocal(RandomUsersDao randomUsersDao){
         return new RandomUsersSourceLocal(randomUsersDao);
     }
 
     @Provides
     @Singleton
     @Remote
-    public RandomUsersSource provideRandomUsersSourceRemote(RandomUsersService randomUsersService){
+    public RandomUsersSource provideSourceRemote(RandomUsersService randomUsersService){
         return new RandomUsersSourceRemote(randomUsersService);
     }
 }
