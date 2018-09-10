@@ -37,18 +37,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         initializeAll();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.onAttach();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
     private void initializeAll() {
         AppContextSingleton.getInstance().init(this);
         initView();

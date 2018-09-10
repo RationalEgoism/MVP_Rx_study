@@ -1,5 +1,10 @@
 package study.rationalegoism.mvp_rx_study.ui.presenter;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.OnLifecycleEvent;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,7 +19,7 @@ import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreL
 import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersStoreRemote;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter implements MainContract.Presenter, LifecycleObserver {
     private final MainContract.View mView;
     private final RandomUsersRepository repository;
 
@@ -27,6 +32,11 @@ public class MainPresenter implements MainContract.Presenter {
                 new RandomUsersStoreLocal(randomUsersDao),
                 new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
         disposeBag = new CompositeDisposable();
+
+        //Observe mView lifecycle
+        if(mView instanceof LifecycleOwner){
+            ((LifecycleOwner) mView).getLifecycle().addObserver(this);
+        }
     }
 
     @Override
@@ -38,11 +48,6 @@ public class MainPresenter implements MainContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleReturnedData, this::handleErrorMessage, mView::stopLoadingIndicator);
         disposeBag.add(disposable);
-    }
-
-    @Override
-    public void onAttach() {
-        getRandomUsers(false);
     }
 
     private void handleReturnedData(List<Person> personList){
@@ -59,7 +64,12 @@ public class MainPresenter implements MainContract.Presenter {
         mView.showErrorMessage(error.getLocalizedMessage());
     }
 
-    @Override
+    @Override @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void onAttach() {
+        getRandomUsers(false);
+    }
+
+    @Override @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDetach() {
         //Clean up unnecessary resources
         disposeBag.clear();
