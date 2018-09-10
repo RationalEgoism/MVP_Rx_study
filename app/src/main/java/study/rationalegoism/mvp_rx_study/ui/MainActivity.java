@@ -1,9 +1,7 @@
 package study.rationalegoism.mvp_rx_study.ui;
 
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,21 +13,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import study.rationalegoism.mvp_rx_study.AppContextSingleton;
 import study.rationalegoism.mvp_rx_study.R;
-import study.rationalegoism.mvp_rx_study.data.api.RandomUsersServiceFactory;
-import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
-import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDb;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
-import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
-import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersSourceLocal;
-import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersSourceRemote;
-import study.rationalegoism.mvp_rx_study.ui.base.BaseActivity;
-import study.rationalegoism.mvp_rx_study.ui.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
+import study.rationalegoism.mvp_rx_study.ui.base.BaseActivity;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.rvRandomUsers) RecyclerView mRecycleView;
