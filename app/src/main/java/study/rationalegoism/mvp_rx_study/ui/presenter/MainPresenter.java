@@ -6,18 +6,16 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
+import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
 import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
-import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
-import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
-import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.ClearRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.OnDeleteListener;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insert.InsertRandomUsersAsync;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.load.LoadRandomUsersAsync;
-import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.load.OnDownloadListener;
 
 public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;

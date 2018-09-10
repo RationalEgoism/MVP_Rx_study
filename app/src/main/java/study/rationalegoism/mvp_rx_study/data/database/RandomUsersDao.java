@@ -7,13 +7,14 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
 
 @Dao
 public interface RandomUsersDao {
 
     @Query("SELECT * FROM person")
-    List<Person> getAllRandomUsers();
+    Flowable<List<Person>> getAllRandomUsers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Person person);
