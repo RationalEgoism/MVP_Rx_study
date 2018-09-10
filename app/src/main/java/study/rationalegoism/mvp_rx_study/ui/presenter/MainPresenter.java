@@ -8,7 +8,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
-import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
+import study.rationalegoism.mvp_rx_study.data.api.RandomUsersServiceFactory;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
 import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
 import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersStoreRemote;
@@ -26,16 +26,11 @@ public class MainPresenter implements MainContract.Presenter {
         repository = new RandomUsersRepository(
                 new RandomUsersStoreLocal(randomUsersDao),
                 new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
-
         disposeBag = new CompositeDisposable();
     }
 
     @Override
-    public void getRandomUsers(boolean refreshRequired) {
-        loadRandomUsers(refreshRequired);
-    }
-
-    private void loadRandomUsers(boolean refreshRequired){
+    public void getRandomUsers(boolean refreshRequired){
         Disposable disposable = repository.loadPersons(refreshRequired)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

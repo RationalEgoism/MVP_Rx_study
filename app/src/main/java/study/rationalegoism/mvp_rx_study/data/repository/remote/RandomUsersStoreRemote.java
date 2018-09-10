@@ -4,8 +4,8 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
-import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
-import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
+import study.rationalegoism.mvp_rx_study.data.api.RandomUsers;
+import study.rationalegoism.mvp_rx_study.data.api.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersStore;
 
 public class RandomUsersStoreRemote implements RandomUsersStore{
