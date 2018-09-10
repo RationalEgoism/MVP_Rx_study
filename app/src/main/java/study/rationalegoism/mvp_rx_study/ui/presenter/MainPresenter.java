@@ -8,6 +8,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
+import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
@@ -22,12 +23,14 @@ public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;
     private final RandomUsersDao randomUsersDao;
     private final RandomUsersService mRandomUsersService;
+    private final RandomUsersStoreLocal localRepository;
 
 
     public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
         this.mView = mView;
         this.randomUsersDao = randomUsersDao;
         mRandomUsersService = RandomUsersServiceFactory.makeRandomUsersService();
+        localRepository = new RandomUsersStoreLocal(randomUsersDao);
     }
 
     @Override
@@ -62,14 +65,11 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void loadRandomUsers(){
-        LoadRandomUsersAsync task = new LoadRandomUsersAsync(new OnDownloadListener() {
-            @Override
-            public void onSuccess(List<Person> personList) {
-                if(personList.size() == 0)
-                    getRandomUsers(true);
-                else
-                    mView.displayRandomUsers(personList);
-            }
+        LoadRandomUsersAsync task = new LoadRandomUsersAsync(personList -> {
+            if(personList.size() == 0)
+                getRandomUsers(true);
+            else
+                mView.displayRandomUsers(personList);
         });
         task.execute(randomUsersDao);
     }
