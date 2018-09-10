@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
     @BindView(R.id.tvNotification) TextView tvNotification;
 
-    MainContract.Presenter mPresenter;
+    @Inject MainContract.Presenter mPresenter;
     private RandomUserAdapter mRandomUserAdapter;
 
     @Override
@@ -60,20 +60,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 .build();
 
         mainContractComponent.inject(this);
-        mPresenter = mainContractComponent.providePresenter();
-
-        /*
-        RandomUsersDb randomUsersDb = Room.databaseBuilder(AppContextSingleton.getInstance().getContext(),
-                RandomUsersDb.class, "random-users-database").build();
-        RandomUsersDao randomUsersDao = randomUsersDb.randomUsersDao();
-        Scheduler ioScheduler = Schedulers.io();
-        Scheduler uiScheduler = AndroidSchedulers.mainThread();
-        RandomUsersRepository repository = new RandomUsersRepository(
-                new RandomUsersSourceLocal(randomUsersDao),
-                new RandomUsersSourceRemote(RandomUsersServiceFactory.makeRandomUsersService()));
-
-        mPresenter = new MainPresenter(this, repository, ioScheduler, uiScheduler);
-        */
     }
 
     private void initView() {
