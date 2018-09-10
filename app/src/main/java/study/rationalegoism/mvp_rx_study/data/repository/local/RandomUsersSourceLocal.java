@@ -5,12 +5,12 @@ import java.util.List;
 import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
-import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersStore;
+import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersSource;
 
-public class RandomUsersStoreLocal implements RandomUsersStore {
+public class RandomUsersSourceLocal implements RandomUsersSource {
     private RandomUsersDao randomUsersDao;
 
-    public RandomUsersStoreLocal(RandomUsersDao randomUsersDao) {
+    public RandomUsersSourceLocal(RandomUsersDao randomUsersDao) {
         this.randomUsersDao = randomUsersDao;
     }
 

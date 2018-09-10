@@ -6,12 +6,12 @@ import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.api.RandomUsers;
 import study.rationalegoism.mvp_rx_study.data.api.RandomUsersService;
-import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersStore;
+import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersSource;
 
-public class RandomUsersStoreRemote implements RandomUsersStore{
+public class RandomUsersSourceRemote implements RandomUsersSource {
     private final RandomUsersService randomUsersService;
 
-    public RandomUsersStoreRemote(RandomUsersService randomUsersService) {
+    public RandomUsersSourceRemote(RandomUsersService randomUsersService) {
         this.randomUsersService = randomUsersService;
     }
 

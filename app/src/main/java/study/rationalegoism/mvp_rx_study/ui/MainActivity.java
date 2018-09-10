@@ -23,8 +23,8 @@ import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDb;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
-import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
-import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersStoreRemote;
+import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersSourceLocal;
+import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersSourceRemote;
 import study.rationalegoism.mvp_rx_study.ui.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
 
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Scheduler ioScheduler = Schedulers.io();
         Scheduler uiScheduler = AndroidSchedulers.mainThread();
         RandomUsersRepository repository = new RandomUsersRepository(
-                new RandomUsersStoreLocal(randomUsersDao),
-                new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
+                new RandomUsersSourceLocal(randomUsersDao),
+                new RandomUsersSourceRemote(RandomUsersServiceFactory.makeRandomUsersService()));
 
         mPresenter = new MainPresenter(this, repository, ioScheduler, uiScheduler);
     }

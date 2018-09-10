@@ -8,16 +8,10 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import java.util.List;
 
 import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
-import study.rationalegoism.mvp_rx_study.data.api.RandomUsersServiceFactory;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
-import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
-import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersStoreRemote;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
 
 public class MainPresenter implements MainContract.Presenter, LifecycleObserver {
