@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Scheduler;
@@ -25,15 +27,16 @@ import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
 import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersSourceLocal;
 import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersSourceRemote;
+import study.rationalegoism.mvp_rx_study.ui.base.BaseActivity;
 import study.rationalegoism.mvp_rx_study.ui.presenter.MainPresenter;
 import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.rvRandomUsers) RecyclerView mRecycleView;
     @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
     @BindView(R.id.tvNotification) TextView tvNotification;
 
-    private MainContract.Presenter mPresenter;
+    MainContract.Presenter mPresenter;
     private RandomUserAdapter mRandomUserAdapter;
 
     @Override
@@ -51,7 +54,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initPresenter() {
+        MainContractComponent mainContractComponent = DaggerMainContractComponent.builder()
+                .appComponent(getAppComponent())
+                .presenterModule(new PresenterModule(this))
+                .build();
 
+        mainContractComponent.inject(this);
+        mPresenter = mainContractComponent.providePresenter();
+
+        /*
         RandomUsersDb randomUsersDb = Room.databaseBuilder(AppContextSingleton.getInstance().getContext(),
                 RandomUsersDb.class, "random-users-database").build();
         RandomUsersDao randomUsersDao = randomUsersDb.randomUsersDao();
@@ -62,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 new RandomUsersSourceRemote(RandomUsersServiceFactory.makeRandomUsersService()));
 
         mPresenter = new MainPresenter(this, repository, ioScheduler, uiScheduler);
+        */
     }
 
     private void initView() {

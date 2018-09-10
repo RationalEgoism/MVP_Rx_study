@@ -19,6 +19,7 @@ public class SchedulerModule {
     }
 
     @RunOn(UI)
+    @Provides
     public Scheduler provideUiScheduler(){
         return AndroidSchedulers.mainThread();
     }
