@@ -10,6 +10,10 @@ public interface MainContract {
         void displayRandomUsers(List<Person> personList);
         void stopLoadingIndicator();
         void clearRandomUsers();
+
+        void showNoDataMessage();
+
+        void showErrorMessage(String error);
     }
 
     interface Presenter extends BasePresenter{

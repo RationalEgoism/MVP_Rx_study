@@ -50,13 +50,13 @@ public class MainPresenter implements MainContract.Presenter {
         if(personList != null && !personList.isEmpty())
             mView.displayRandomUsers(personList);
         else{
-            //TODO displayNoDataMessage
+            mView.showNoDataMessage();
         }
     }
 
     private void handleErrorMessage(Throwable error){
         mView.stopLoadingIndicator();
-        //TODO mView.showErrorMessage
+        mView.showErrorMessage(error.getLocalizedMessage());
     }
 
     @Override

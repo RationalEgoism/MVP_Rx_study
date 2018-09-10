@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MVP_Rx_study</string>
-    <string name="pictureofrandomuser">pictureOfRandomUser</string>
+    <string name="picture_of_random_user">pictureOfRandomUser</string>
+    <string name="msg_no_data">No data returned. Pull to refresh.</string>
 </resources>

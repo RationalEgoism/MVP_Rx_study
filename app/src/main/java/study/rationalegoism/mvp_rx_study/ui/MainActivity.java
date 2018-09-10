@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     @BindView(R.id.rvRandomUsers) RecyclerView mRecycleView;
     @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.tvNotification) TextView tvNotification;
+
     private MainContract.Presenter mPresenter;
     private RandomUserAdapter mRandomUserAdapter;
 
@@ -31,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initializeAll();
-//        getRandomUsersListFromActivity();
     }
 
     @Override
@@ -69,10 +72,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     AppContextSingleton.getInstance().
                     internetConnectionAvailable());
         });
+
+        tvNotification.setVisibility(View.GONE);
     }
 
     @Override
     public void displayRandomUsers(List<Person> personList) {
+        tvNotification.setVisibility(View.GONE);
         mRandomUserAdapter.setPersonList(personList);
     }
 
@@ -85,5 +91,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void clearRandomUsers(){
         mRandomUserAdapter.clearData();
+    }
+
+    @Override public void showNoDataMessage() {
+        showNotification(getString(R.string.msg_no_data));
+    }
+
+    @Override public void showErrorMessage(String error) {
+        showNotification(error);
+    }
+
+    private void showNotification(String message) {
+        tvNotification.setVisibility(View.VISIBLE);
+        tvNotification.setText(message);
     }
 }
