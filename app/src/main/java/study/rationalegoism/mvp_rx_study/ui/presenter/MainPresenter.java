@@ -1,10 +1,13 @@
 package study.rationalegoism.mvp_rx_study.ui.presenter;
 
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
+import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
 import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
@@ -36,13 +39,27 @@ public class MainPresenter implements MainContract.Presenter {
         Disposable disposable = repository.loadPersons(refreshRequired)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mView::displayRandomUsers);
+                .subscribe(this::handleReturnedData, this::handleErrorMessage, mView::stopLoadingIndicator);
         disposeBag.add(disposable);
     }
 
     @Override
     public void onAttach() {
         getRandomUsers(false);
+    }
+
+    private void handleReturnedData(List<Person> personList){
+        mView.stopLoadingIndicator();
+        if(personList != null && !personList.isEmpty())
+            mView.displayRandomUsers(personList);
+        else{
+            //TODO displayNoDataMessage
+        }
+    }
+
+    private void handleErrorMessage(Throwable error){
+        mView.stopLoadingIndicator();
+        //TODO mView.showErrorMessage
     }
 
     @Override
