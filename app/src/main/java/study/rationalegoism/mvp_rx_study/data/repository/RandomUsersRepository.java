@@ -17,13 +17,23 @@ public class RandomUsersRepository implements RandomUsersStore {
     @Override
     public Flowable<List<Person>> loadPersons(boolean refreshRequired) {
         if(refreshRequired)
-            return remoteStorage.loadPersons(true);
+            return refresh(refreshRequired);
         else
             return localStorage.loadPersons(false)
                     .take(1)
                     .filter(list -> !list.isEmpty());
     }
 
+
+    private Flowable<List<Person>> refresh(boolean refreshRequired){
+        return remoteStorage.loadPersons(refreshRequired)
+                .take(1)
+                .doOnNext(list -> clearData())
+                .flatMap(Flowable::fromIterable)
+                .doOnNext(this::addPerson)
+                .toList()
+                .toFlowable();
+    }
 
     //Only localStorage can do it
     @Override

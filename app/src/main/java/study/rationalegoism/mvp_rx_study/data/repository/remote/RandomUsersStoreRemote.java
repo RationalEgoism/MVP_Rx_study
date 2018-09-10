@@ -16,8 +16,8 @@ public class RandomUsersStoreRemote implements RandomUsersStore{
 
     @Override
     public Flowable<List<Person>> loadPersons(boolean refreshRequired) {
-        //Get data from Api, serialize JSON to RandomUsers by ConvertFactory,
-        // here we get List of person and return it as Flowable
+        // Get data from Api, serialize JSON to RandomUsers by ConvertFactory,
+        // and here .map() convert Flowable<RansomUsers> to Flowable<List<Person>>
         return randomUsersService.getRandomUsers(10, "gb").map(randomUsers -> randomUsers.getPersons());
     }
 
