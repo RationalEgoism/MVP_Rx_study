@@ -8,8 +8,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import study.rationalegoism.mvp_rx_study.AppModule;
 
-@Module
+//AppModule provides Context
+@Module(includes = AppModule.class)
 public class DatabaseModule {
 
     @Provides
@@ -18,7 +20,6 @@ public class DatabaseModule {
         return Config.DATABASE_NAME;
     }
 
-    //TODO CONTEXT NEED
     @Provides
     @Singleton
     public RandomUsersDao provideRandomUsersDao(Context context,

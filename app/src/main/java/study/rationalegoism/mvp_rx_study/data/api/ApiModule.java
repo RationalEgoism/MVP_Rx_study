@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.io.File;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -15,12 +14,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import study.rationalegoism.mvp_rx_study.AppModule;
 import study.rationalegoism.mvp_rx_study.data.database.Config;
 import timber.log.Timber;
 
 
-//TODO NEED CONTEXT
-@Module
+//AppModule provides Context
+@Module(includes = AppModule.class)
 public class ApiModule {
 
     @Provides

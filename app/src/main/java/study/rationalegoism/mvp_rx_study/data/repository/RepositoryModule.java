@@ -1,4 +1,4 @@
-package study.rationalegoism.mvp_rx_study;
+package study.rationalegoism.mvp_rx_study.data.repository;
 
 import dagger.Module;
 import dagger.Provides;
