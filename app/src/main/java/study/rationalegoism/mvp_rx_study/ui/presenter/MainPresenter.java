@@ -11,7 +11,9 @@ import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersServiceFactory;
+import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersRepository;
 import study.rationalegoism.mvp_rx_study.data.repository.local.RandomUsersStoreLocal;
+import study.rationalegoism.mvp_rx_study.data.repository.remote.RandomUsersStoreRemote;
 import study.rationalegoism.mvp_rx_study.ui.MainContract;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.delete.ClearRandomUsersAsync;
 import study.rationalegoism.mvp_rx_study.ui.presenter.asyncTasks.insert.InsertRandomUsersAsync;
@@ -21,14 +23,16 @@ public class MainPresenter implements MainContract.Presenter {
     private final MainContract.View mView;
     private final RandomUsersDao randomUsersDao;
     private final RandomUsersService mRandomUsersService;
-    private final RandomUsersStoreLocal localRepository;
+    private final RandomUsersRepository repository;
 
 
     public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
         this.mView = mView;
         this.randomUsersDao = randomUsersDao;
         mRandomUsersService = RandomUsersServiceFactory.makeRandomUsersService();
-        localRepository = new RandomUsersStoreLocal(randomUsersDao);
+        repository = new RandomUsersRepository(
+                new RandomUsersStoreLocal(randomUsersDao),
+                new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
     }
 
     @Override
