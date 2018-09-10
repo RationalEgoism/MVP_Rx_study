@@ -31,6 +31,8 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void getRandomUsers(boolean refreshRequired){
+        mView.clearRandomUsers();
+
         Disposable disposable = repository.loadPersons(refreshRequired)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

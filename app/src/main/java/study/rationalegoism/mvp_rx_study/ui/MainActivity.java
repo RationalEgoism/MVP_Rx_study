@@ -81,4 +81,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             refreshLayout.setRefreshing(false);
         }
     }
+
+    @Override
+    public void clearRandomUsers(){
+        mRandomUserAdapter.clearData();
+    }
 }

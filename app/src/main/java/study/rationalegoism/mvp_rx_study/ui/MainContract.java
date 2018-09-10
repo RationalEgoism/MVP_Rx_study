@@ -9,6 +9,7 @@ public interface MainContract {
     interface View{
         void displayRandomUsers(List<Person> personList);
         void stopLoadingIndicator();
+        void clearRandomUsers();
     }
 
     interface Presenter extends BasePresenter{

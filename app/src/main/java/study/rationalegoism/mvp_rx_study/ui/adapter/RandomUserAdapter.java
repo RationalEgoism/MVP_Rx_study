@@ -59,4 +59,9 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Ra
         this.personList = personList;
         notifyDataSetChanged();
     }
+
+    public void clearData(){
+        personList.clear();
+        notifyDataSetChanged();
+    }
 }
