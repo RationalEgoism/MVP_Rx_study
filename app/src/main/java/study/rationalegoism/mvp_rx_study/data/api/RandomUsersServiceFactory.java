@@ -33,8 +33,6 @@ public class RandomUsersServiceFactory {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(message -> Timber.i(message));
         return new OkHttpClient().newBuilder()
                 .cache(cache)
-
-
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
     }

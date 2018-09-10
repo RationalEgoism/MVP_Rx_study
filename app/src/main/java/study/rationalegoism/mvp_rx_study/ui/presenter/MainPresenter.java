@@ -29,11 +29,9 @@ public class MainPresenter implements MainContract.Presenter, LifecycleObserver 
     //collect our active subscribes
     private CompositeDisposable disposeBag;
 
-    public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao, Scheduler ioScheduler, Scheduler uiScheduler) {
+    public MainPresenter(MainContract.View mView, RandomUsersRepository repository, Scheduler ioScheduler, Scheduler uiScheduler) {
         this.mView = mView;
-        repository = new RandomUsersRepository(
-                new RandomUsersStoreLocal(randomUsersDao),
-                new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
+        this.repository = repository;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
         disposeBag = new CompositeDisposable();
