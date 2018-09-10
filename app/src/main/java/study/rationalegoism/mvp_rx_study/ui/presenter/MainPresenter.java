@@ -61,6 +61,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onDetach() {
-        //TODO
+        //Clean up unnecessary resources
+        disposeBag.clear();
     }
 }
