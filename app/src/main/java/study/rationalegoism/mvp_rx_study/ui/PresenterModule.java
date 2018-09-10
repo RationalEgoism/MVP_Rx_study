@@ -12,7 +12,7 @@ public class PresenterModule {
     }
 
     @Provides
-    public MainContract.View proideView(){
+    public MainContract.View provideView(){
         return view;
     }
 }
