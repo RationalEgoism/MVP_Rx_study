@@ -19,13 +19,15 @@ public class RandomUsersRepository implements RandomUsersStore {
         return null;
     }
 
+    //Only localStorage can do it
     @Override
     public void addPerson(Person person) {
-
+        localStorage.addPerson(person);
     }
 
+    //Only localStorage can do it
     @Override
     public void clearData() {
-
+        localStorage.clearData();
     }
 }

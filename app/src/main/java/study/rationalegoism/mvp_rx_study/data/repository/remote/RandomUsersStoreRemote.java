@@ -16,16 +16,18 @@ public class RandomUsersStoreRemote implements RandomUsersStore{
 
     @Override
     public Flowable<List<Person>> loadPersons() {
-        return null;
+        //Get data from Api, serialize JSON to RandomUsers by ConvertFactory,
+        // here we get List of person and return it as Flowable
+        return randomUsersService.getRandomUsers(10, "gb").map(randomUsers -> randomUsers.getPersons());
     }
 
     @Override
     public void addPerson(Person person) {
-
+        throw new UnsupportedOperationException("Unsupported Operation");
     }
 
     @Override
     public void clearData() {
-
+        throw new UnsupportedOperationException("Unsupported Operation");
     }
 }
