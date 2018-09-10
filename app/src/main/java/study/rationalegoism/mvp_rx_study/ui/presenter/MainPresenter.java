@@ -7,6 +7,7 @@ import android.arch.lifecycle.OnLifecycleEvent;
 
 import java.util.List;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -22,15 +23,19 @@ import study.rationalegoism.mvp_rx_study.ui.MainContract;
 public class MainPresenter implements MainContract.Presenter, LifecycleObserver {
     private final MainContract.View mView;
     private final RandomUsersRepository repository;
+    private final Scheduler ioScheduler;
+    private final Scheduler uiScheduler;
 
     //collect our active subscribes
     private CompositeDisposable disposeBag;
 
-    public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao) {
+    public MainPresenter(MainContract.View mView, RandomUsersDao randomUsersDao, Scheduler ioScheduler, Scheduler uiScheduler) {
         this.mView = mView;
         repository = new RandomUsersRepository(
                 new RandomUsersStoreLocal(randomUsersDao),
                 new RandomUsersStoreRemote(RandomUsersServiceFactory.makeRandomUsersService()));
+        this.ioScheduler = ioScheduler;
+        this.uiScheduler = uiScheduler;
         disposeBag = new CompositeDisposable();
 
         //Observe mView lifecycle
@@ -44,8 +49,8 @@ public class MainPresenter implements MainContract.Presenter, LifecycleObserver 
         mView.clearRandomUsers();
 
         Disposable disposable = repository.loadPersons(refreshRequired)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
                 .subscribe(this::handleReturnedData, this::handleErrorMessage, mView::stopLoadingIndicator);
         disposeBag.add(disposable);
     }

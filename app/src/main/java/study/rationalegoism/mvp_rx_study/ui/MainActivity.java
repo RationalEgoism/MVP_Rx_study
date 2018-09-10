@@ -13,6 +13,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import study.rationalegoism.mvp_rx_study.AppContextSingleton;
 import study.rationalegoism.mvp_rx_study.R;
 import study.rationalegoism.mvp_rx_study.data.database.RandomUsersDao;
@@ -47,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         RandomUsersDb randomUsersDb = Room.databaseBuilder(AppContextSingleton.getInstance().getContext(),
                 RandomUsersDb.class, "random-users-database").build();
         RandomUsersDao randomUsersDao = randomUsersDb.randomUsersDao();
+        Scheduler ioScheduler = Schedulers.io();
+        Scheduler uiScheduler = AndroidSchedulers.mainThread();
 
 
-        mPresenter = new MainPresenter(this, randomUsersDao);
+        mPresenter = new MainPresenter(this, randomUsersDao, ioScheduler, uiScheduler);
     }
 
     private void initView() {
