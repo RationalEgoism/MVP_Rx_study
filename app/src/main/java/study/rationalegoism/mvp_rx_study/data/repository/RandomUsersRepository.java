@@ -3,15 +3,20 @@ package study.rationalegoism.mvp_rx_study.data.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
+import study.rationalegoism.mvp_rx_study.data.repository.local.Local;
+import study.rationalegoism.mvp_rx_study.data.repository.remote.Remote;
 
 public class RandomUsersRepository implements RandomUsersSource {
     private final RandomUsersSource localStorage;
     private final RandomUsersSource remoteStorage;
     private List<Person> cache;
 
-    public RandomUsersRepository(RandomUsersSource localStorage, RandomUsersSource remoteStorage) {
+    @Inject
+    public RandomUsersRepository(@Local RandomUsersSource localStorage, @Remote RandomUsersSource remoteStorage) {
         this.localStorage = localStorage;
         this.remoteStorage = remoteStorage;
 

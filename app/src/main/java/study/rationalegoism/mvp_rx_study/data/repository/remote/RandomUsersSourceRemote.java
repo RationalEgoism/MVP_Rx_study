@@ -2,6 +2,8 @@ package study.rationalegoism.mvp_rx_study.data.repository.remote;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.data.api.RandomUsers;
@@ -11,6 +13,7 @@ import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersSource;
 public class RandomUsersSourceRemote implements RandomUsersSource {
     private final RandomUsersService randomUsersService;
 
+    @Inject
     public RandomUsersSourceRemote(RandomUsersService randomUsersService) {
         this.randomUsersService = randomUsersService;
     }

@@ -54,12 +54,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void initPresenter() {
-        MainContractComponent mainContractComponent = DaggerMainContractComponent.builder()
+        DaggerMainContractComponent.builder()
                 .appComponent(getAppComponent())
                 .presenterModule(new PresenterModule(this))
-                .build();
-
-        mainContractComponent.inject(this);
+                .build()
+                .inject(this);
     }
 
     private void initView() {
