@@ -62,7 +62,15 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void loadRandomUsers(){
-        LoadRandomUsersAsync task = new LoadRandomUsersAsync(mView::displayRandomUsers);
+        LoadRandomUsersAsync task = new LoadRandomUsersAsync(new OnDownloadListener() {
+            @Override
+            public void onSuccess(List<Person> personList) {
+                if(personList.size() == 0)
+                    getRandomUsers(true);
+                else
+                    mView.displayRandomUsers(personList);
+            }
+        });
         task.execute(randomUsersDao);
     }
 
