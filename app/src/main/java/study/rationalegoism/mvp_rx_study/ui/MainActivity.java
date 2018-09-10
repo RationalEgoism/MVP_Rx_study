@@ -13,11 +13,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import study.rationalegoism.mvp_rx_study.AppContextSingleton;
 import study.rationalegoism.mvp_rx_study.R;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
 import study.rationalegoism.mvp_rx_study.ui.adapter.RandomUserAdapter;
 import study.rationalegoism.mvp_rx_study.ui.base.BaseActivity;
+
+import static study.rationalegoism.mvp_rx_study.App.internetConnectionAvailable;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.rvRandomUsers) RecyclerView mRecycleView;
@@ -36,7 +37,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void initializeAll() {
-        AppContextSingleton.getInstance().init(this);
         initView();
         initPresenter();
     }
@@ -59,9 +59,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         refreshLayout.setOnRefreshListener(() -> {
             //if we have internet connection -> refresh, else -> display old data
-            mPresenter.getRandomUsers(
-                    AppContextSingleton.getInstance().
-                    internetConnectionAvailable());
+            mPresenter.getRandomUsers(internetConnectionAvailable());
         });
 
         tvNotification.setVisibility(View.GONE);
