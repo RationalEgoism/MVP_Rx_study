@@ -31,10 +31,12 @@ public class AppContextSingleton{
         this.context = context.getApplicationContext();
     }
 
+    //get Application context
     public Context getContext(){
         return context;
     }
 
+    //Check if we have internet
     public boolean internetConnectionAvailable() {
         int timeOut = 200;
         InetAddress inetAddress = null;
