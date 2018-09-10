@@ -6,6 +6,7 @@ import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import study.rationalegoism.mvp_rx_study.AppContextSingleton;
 import timber.log.Timber;
@@ -22,20 +23,18 @@ public class RandomUsersServiceFactory {
                 .client(okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(RandomUsersService.class);
     }
 
     private static OkHttpClient makeOkHttpClient() {
         Cache cache = getCacheFile();
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                Timber.i(message);
-            }
-        });
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(message -> Timber.i(message));
         return new OkHttpClient().newBuilder()
                 .cache(cache)
+
+
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
     }

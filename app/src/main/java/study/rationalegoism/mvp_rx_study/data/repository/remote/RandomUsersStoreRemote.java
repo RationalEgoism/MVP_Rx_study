@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import study.rationalegoism.mvp_rx_study.data.model.Person;
+import study.rationalegoism.mvp_rx_study.data.model.RandomUsers;
 import study.rationalegoism.mvp_rx_study.data.network.RandomUsersService;
 import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersStore;
 
@@ -18,7 +19,8 @@ public class RandomUsersStoreRemote implements RandomUsersStore{
     public Flowable<List<Person>> loadPersons(boolean refreshRequired) {
         // Get data from Api, serialize JSON to RandomUsers by ConvertFactory,
         // and here .map() convert Flowable<RansomUsers> to Flowable<List<Person>>
-        return randomUsersService.getRandomUsers(10, "gb").map(randomUsers -> randomUsers.getPersons());
+        return randomUsersService.getRandomUsers(10, "gb")
+                .map(RandomUsers::getPersons);
     }
 
     @Override
