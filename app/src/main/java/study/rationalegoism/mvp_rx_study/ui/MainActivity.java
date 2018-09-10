@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initPresenter() {
+
         RandomUsersDb randomUsersDb = Room.databaseBuilder(AppContextSingleton.getInstance().getContext(),
                 RandomUsersDb.class, "random-users-database").build();
         RandomUsersDao randomUsersDao = randomUsersDb.randomUsersDao();
