@@ -13,7 +13,6 @@ import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersSource;
 public class RandomUsersSourceRemote implements RandomUsersSource {
     private final RandomUsersService randomUsersService;
 
-    @Inject
     public RandomUsersSourceRemote(RandomUsersService randomUsersService) {
         this.randomUsersService = randomUsersService;
     }

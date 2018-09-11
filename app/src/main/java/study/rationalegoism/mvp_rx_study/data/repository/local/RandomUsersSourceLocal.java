@@ -12,7 +12,6 @@ import study.rationalegoism.mvp_rx_study.data.repository.RandomUsersSource;
 public class RandomUsersSourceLocal implements RandomUsersSource {
     private RandomUsersDao randomUsersDao;
 
-    @Inject
     public RandomUsersSourceLocal(RandomUsersDao randomUsersDao) {
         this.randomUsersDao = randomUsersDao;
     }

@@ -15,7 +15,6 @@ public class RandomUsersRepository implements RandomUsersSource {
     private final RandomUsersSource remoteStorage;
     private List<Person> cache;
 
-    @Inject
     public RandomUsersRepository(@Local RandomUsersSource localStorage, @Remote RandomUsersSource remoteStorage) {
         this.localStorage = localStorage;
         this.remoteStorage = remoteStorage;
